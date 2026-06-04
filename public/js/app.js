@@ -1,10 +1,16 @@
-document.querySelectorAll('.toast').forEach((toast) => {
+document.querySelectorAll('.toast').forEach((toastElement) => {
+    if (window.bootstrap?.Toast) {
+        const toast = bootstrap.Toast.getOrCreateInstance(toastElement);
+        toast.show();
+        return;
+    }
+
     window.setTimeout(() => {
-        toast.style.transition = 'opacity 180ms ease, transform 180ms ease';
-        toast.style.opacity = '0';
-        toast.style.transform = 'translateY(-4px)';
-        window.setTimeout(() => toast.remove(), 220);
-    }, 3500);
+        toastElement.style.transition = 'opacity 180ms ease, transform 180ms ease';
+        toastElement.style.opacity = '0';
+        toastElement.style.transform = 'translateY(-4px)';
+        window.setTimeout(() => toastElement.remove(), 220);
+    }, 4500);
 });
 
 document.querySelectorAll('[data-confirm]').forEach((form) => {

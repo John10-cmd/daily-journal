@@ -219,29 +219,38 @@ a:hover {
     line-height: 1.75;
 }
 
-.toast {
-    position: static;
-    display: block;
-    max-width: none;
+.app-toast-container {
+    z-index: 1080;
+    margin-top: 4.75rem;
 }
 
-.app-alert {
-    border-width: 1px;
+.app-toast {
+    width: min(360px, calc(100vw - 2rem));
+    border: 0;
     border-radius: .5rem;
-    box-shadow: 0 .125rem .375rem rgba(15, 23, 42, .04);
-    margin-bottom: 1.25rem;
+    box-shadow: 0 .75rem 1.75rem rgba(15, 23, 42, .22);
+    color: #fff;
+    overflow: hidden;
 }
 
-.alert-success {
-    --bs-alert-color: #065f46;
-    --bs-alert-bg: #ecfdf5;
-    --bs-alert-border-color: #86efac;
+.app-toast + .app-toast {
+    margin-top: .75rem;
 }
 
-.alert-danger {
-    --bs-alert-color: #9f1239;
-    --bs-alert-bg: #fff1f2;
-    --bs-alert-border-color: #fda4af;
+.app-toast-success {
+    background: #198754;
+}
+
+.app-toast-danger {
+    background: #dc3545;
+}
+
+.app-toast .toast-body {
+    padding: .85rem 1rem;
+}
+
+.app-toast ul {
+    font-size: .875rem;
 }
 
 /* Compatibility for the former Tailwind-style utility classes still present in Blade. */
