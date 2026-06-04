@@ -83,3 +83,5 @@ php artisan test
 npm run build
 php artisan route:list
 ```
+
+# daily-journal
