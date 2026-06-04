@@ -21,6 +21,10 @@
                 Remember me
             </label>
             <button class="btn btn-primary w-full" type="submit">Login</button>
+            <p class="mb-0 text-center text-sm text-zinc-600">
+                No account yet?
+                <a class="fw-bold" href="{{ route('register') }}">Sign up</a>
+            </p>
         </form>
     </section>
 @endsection

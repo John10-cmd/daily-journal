@@ -225,6 +225,25 @@ a:hover {
     max-width: none;
 }
 
+.app-alert {
+    border-width: 1px;
+    border-radius: .5rem;
+    box-shadow: 0 .125rem .375rem rgba(15, 23, 42, .04);
+    margin-bottom: 1.25rem;
+}
+
+.alert-success {
+    --bs-alert-color: #065f46;
+    --bs-alert-bg: #ecfdf5;
+    --bs-alert-border-color: #86efac;
+}
+
+.alert-danger {
+    --bs-alert-color: #9f1239;
+    --bs-alert-bg: #fff1f2;
+    --bs-alert-border-color: #fda4af;
+}
+
 /* Compatibility for the former Tailwind-style utility classes still present in Blade. */
 .min-h-screen { min-height: 100vh; }
 .min-h-\[72vh\] { min-height: 72vh; }

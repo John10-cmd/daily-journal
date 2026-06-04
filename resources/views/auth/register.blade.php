@@ -29,6 +29,10 @@
                 </div>
             </div>
             <button class="btn btn-primary w-full" type="submit">Create Account</button>
+            <p class="mb-0 text-center text-sm text-zinc-600">
+                Already have an account?
+                <a class="fw-bold" href="{{ route('login') }}">Login</a>
+            </p>
         </form>
     </section>
 @endsection
