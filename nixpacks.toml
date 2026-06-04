@@ -1,0 +1,9 @@
+[phases.build]
+cmds = [
+    "composer install --no-dev --optimize-autoloader",
+    "npm install",
+    "npm run build"
+]
+
+[start]
+cmd = "sh railway/start.sh"
