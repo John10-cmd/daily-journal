@@ -74,7 +74,7 @@ Generate an app key locally with `php artisan key:generate --show`, then paste i
 
 Add a MySQL database service in Railway first. Railway exposes MySQL variables such as `MYSQLHOST`, `MYSQLPORT`, `MYSQLUSER`, `MYSQLPASSWORD`, `MYSQLDATABASE`, and `MYSQL_URL`; this app can read `MYSQL_URL` directly, but setting `DB_URL=${{ MySQL.MYSQL_URL }}` keeps the Laravel config explicit.
 
-The Railway config-as-code file, `railway.toml`, sets the Railpack builder, Vite build command, healthcheck, pre-deploy command, and start command. The pre-deploy command clears and caches Laravel config, runs migrations, seeds the preset admin account, and refreshes the storage symlink. The start command runs Laravel on Railway's assigned `PORT`.
+The Railway config-as-code file, `railway.toml`, sets the Railpack builder, Vite build command, healthcheck, and start command. The start command clears and caches Laravel config, runs migrations, seeds the preset admin account, refreshes the storage symlink, and then runs Laravel on Railway's assigned `PORT`.
 
 ## Verification
 

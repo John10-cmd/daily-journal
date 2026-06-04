@@ -3,7 +3,6 @@ builder = "RAILPACK"
 buildCommand = "npm run build"
 
 [deploy]
-preDeployCommand = "sh railway/init-app.sh"
 startCommand = "sh railway/start.sh"
 healthcheckPath = "/up"
 healthcheckTimeout = 100
