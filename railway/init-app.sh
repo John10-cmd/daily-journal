@@ -2,7 +2,9 @@
 set -e
 
 echo "Preparing Laravel for Railway..."
-php artisan optimize:clear
+php artisan config:clear
+php artisan route:clear
+php artisan view:clear
 
 echo "Running database migrations..."
 attempt=1
@@ -24,6 +26,7 @@ echo "Refreshing public storage link..."
 php artisan storage:link --force
 
 echo "Caching Laravel config, routes, and views..."
+php artisan cache:clear
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache
