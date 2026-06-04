@@ -5,17 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ $title ?? 'Daily Journal' }}</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="/css/app.css" rel="stylesheet">
 </head>
-<body class="min-h-screen bg-stone-50 text-zinc-900 antialiased">
-    <div class="min-h-screen">
+<body>
+    <div class="app-shell">
         @include('partials.nav')
 
-        <main class="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6 lg:px-8">
+        <main class="container py-4">
             @include('partials.flash')
             {{ $slot ?? '' }}
             @yield('content')
         </main>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/app.js"></script>
 </body>
 </html>
