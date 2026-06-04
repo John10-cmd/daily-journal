@@ -7,12 +7,12 @@ php artisan optimize:clear
 echo "Running database migrations..."
 attempt=1
 until php artisan migrate --force --no-interaction; do
-    if [ "$attempt" -ge 10 ]; then
+    if [ "$attempt" -ge 30 ]; then
         echo "Database migration failed after $attempt attempts."
         exit 1
     fi
 
-    echo "Database is not ready yet. Retrying in 5 seconds... ($attempt/10)"
+    echo "Database is not ready yet. Retrying in 5 seconds... ($attempt/30)"
     attempt=$((attempt + 1))
     sleep 5
 done
