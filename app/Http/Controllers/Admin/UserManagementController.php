@@ -43,19 +43,22 @@ class UserManagementController extends Controller
     {
         $this->authorizeAdmin();
 
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'max:80'],
-            'email' => ['required', 'email', 'max:255', 'unique:users,email'],
-            'bio' => ['nullable', 'string', 'max:500'],
-            'is_admin' => ['nullable', 'boolean'],
-            'password' => ['required', 'confirmed', Password::min(8)->letters()->numbers()],
-        ]);
+        $validated = $request->validate(
+            [
+                'name' => ['required', 'string', 'max:80'],
+                'email' => ['required', 'email', 'max:255', 'unique:users,email'],
+                'bio' => ['nullable', 'string', 'max:500'],
+                'is_admin' => ['nullable', 'boolean'],
+                'password' => ['required', 'confirmed', Password::min(8)->letters()->numbers()],
+            ],
+            $this->validationMessages()
+        );
 
         $validated['is_admin'] = $request->boolean('is_admin');
 
         User::create($validated);
 
-        return redirect()->route('admin.users.index')->with('success', 'User created.');
+        return redirect()->route('admin.users.index')->with('success', 'The user account was created.');
     }
 
     public function edit(User $user): View
@@ -69,13 +72,16 @@ class UserManagementController extends Controller
     {
         $this->authorizeAdmin();
 
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'max:80'],
-            'email' => ['required', 'email', 'max:255', 'unique:users,email,'.$user->id],
-            'bio' => ['nullable', 'string', 'max:500'],
-            'is_admin' => ['nullable', 'boolean'],
-            'password' => ['nullable', 'confirmed', Password::min(8)->letters()->numbers()],
-        ]);
+        $validated = $request->validate(
+            [
+                'name' => ['required', 'string', 'max:80'],
+                'email' => ['required', 'email', 'max:255', 'unique:users,email,'.$user->id],
+                'bio' => ['nullable', 'string', 'max:500'],
+                'is_admin' => ['nullable', 'boolean'],
+                'password' => ['nullable', 'confirmed', Password::min(8)->letters()->numbers()],
+            ],
+            $this->validationMessages()
+        );
 
         $validated['is_admin'] = $request->boolean('is_admin');
 
@@ -89,7 +95,7 @@ class UserManagementController extends Controller
 
         $user->update($validated);
 
-        return redirect()->route('admin.users.index')->with('success', 'User updated.');
+        return redirect()->route('admin.users.index')->with('success', 'The user account was updated.');
     }
 
     public function destroy(User $user): RedirectResponse
@@ -102,11 +108,28 @@ class UserManagementController extends Controller
 
         $user->delete();
 
-        return redirect()->route('admin.users.index')->with('success', 'User deleted.');
+        return redirect()->route('admin.users.index')->with('success', 'The user account was deleted.');
     }
 
     private function authorizeAdmin(): void
     {
         abort_unless(auth()->check() && auth()->user()->is_admin, 403);
+    }
+
+    private function validationMessages(): array
+    {
+        return [
+            'name.required' => 'Enter the user\'s name.',
+            'name.max' => 'The user\'s name cannot be longer than 80 characters.',
+            'email.required' => 'Enter the user\'s email address.',
+            'email.email' => 'Enter a valid email address for the user.',
+            'email.unique' => 'Another account already uses this email address.',
+            'bio.max' => 'The user bio cannot be longer than 500 characters.',
+            'password.required' => 'Create a password for the user.',
+            'password.confirmed' => 'The password confirmation does not match.',
+            'password.min' => 'The password must contain at least 8 characters.',
+            'password.letters' => 'The password must contain at least one letter.',
+            'password.numbers' => 'The password must contain at least one number.',
+        ];
     }
 }

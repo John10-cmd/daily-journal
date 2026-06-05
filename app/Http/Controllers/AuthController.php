@@ -19,11 +19,25 @@ class AuthController extends Controller
 
     public function storeRegister(Request $request): RedirectResponse
     {
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'max:80'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
-            'password' => ['required', 'confirmed', Password::min(8)->letters()->numbers()],
-        ]);
+        $validated = $request->validate(
+            [
+                'name' => ['required', 'string', 'max:80'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+                'password' => ['required', 'confirmed', Password::min(8)->letters()->numbers()],
+            ],
+            [
+                'name.required' => 'Enter your name.',
+                'name.max' => 'Your name cannot be longer than 80 characters.',
+                'email.required' => 'Enter your email address.',
+                'email.email' => 'Enter a valid email address.',
+                'email.unique' => 'An account already uses this email address.',
+                'password.required' => 'Create a password.',
+                'password.confirmed' => 'The password confirmation does not match.',
+                'password.min' => 'Your password must contain at least 8 characters.',
+                'password.letters' => 'Your password must contain at least one letter.',
+                'password.numbers' => 'Your password must contain at least one number.',
+            ]
+        );
 
         $user = User::create([
             'name' => $validated['name'],
@@ -33,7 +47,7 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('dashboard')->with('success', 'Welcome in. Your journal is ready.');
+        return redirect()->route('dashboard')->with('success', 'Your account was created successfully.');
     }
 
     public function createLogin(): View
@@ -43,20 +57,27 @@ class AuthController extends Controller
 
     public function storeLogin(Request $request): RedirectResponse
     {
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required', 'string'],
-        ]);
+        $credentials = $request->validate(
+            [
+                'email' => ['required', 'email'],
+                'password' => ['required', 'string'],
+            ],
+            [
+                'email.required' => 'Enter your email address.',
+                'email.email' => 'Enter a valid email address.',
+                'password.required' => 'Enter your password.',
+            ]
+        );
 
         if (! Auth::attempt($credentials, $request->boolean('remember'))) {
             return back()->withErrors([
-                'email' => 'Those login details do not match our records.',
+                'email' => 'The email address or password is incorrect.',
             ])->onlyInput('email');
         }
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard'))->with('success', 'Good to see you again.');
+        return redirect()->intended(route('dashboard'))->with('success', 'You are now logged in.');
     }
 
     public function destroy(Request $request): RedirectResponse
@@ -66,6 +87,6 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('home')->with('success', 'You have been logged out.');
+        return redirect()->route('home')->with('success', 'You are now logged out.');
     }
 }

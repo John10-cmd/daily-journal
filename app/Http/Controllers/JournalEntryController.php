@@ -39,7 +39,7 @@ class JournalEntryController extends Controller
     {
         $request->user()->journalEntries()->create($request->payload());
 
-        return redirect()->route('journal.index')->with('success', 'Journal entry saved.');
+        return redirect()->route('journal.index')->with('success', 'Your journal entry was saved.');
     }
 
     public function show(JournalEntry $journal): View
@@ -64,7 +64,7 @@ class JournalEntryController extends Controller
         $this->authorizeEntry($journal);
         $journal->update($request->payload());
 
-        return redirect()->route('journal.show', $journal)->with('success', 'Journal entry updated.');
+        return redirect()->route('journal.show', $journal)->with('success', 'Your journal entry was updated.');
     }
 
     public function destroy(JournalEntry $journal): RedirectResponse
@@ -72,7 +72,7 @@ class JournalEntryController extends Controller
         $this->authorizeEntry($journal);
         $journal->delete();
 
-        return redirect()->route('journal.index')->with('success', 'Journal entry deleted.');
+        return redirect()->route('journal.index')->with('success', 'Your journal entry was deleted.');
     }
 
     private function authorizeEntry(JournalEntry $entry): void
